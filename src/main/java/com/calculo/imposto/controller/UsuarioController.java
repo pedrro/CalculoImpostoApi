@@ -15,6 +15,6 @@ public class UsuarioController {
 
     @RequestMapping(value = "/usuario", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Usuario> criaUsuario(@RequestBody Usuario usuario) {
-        return new ResponseEntity<Usuario>(new Usuario(usuario.nome, usuario.salario), HttpStatus.ACCEPTED);
+        return new ResponseEntity<Usuario>(new Usuario(usuario.nome, usuario.salario), HttpStatus.CREATED);
     }
 }
