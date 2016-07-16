@@ -30,6 +30,6 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile("org.projectlombok:lombok:1.16.4")
-
+	compile("org.apache.commons:commons-math3:3.6.1")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
