@@ -32,4 +32,6 @@ dependencies {
 	compile("org.projectlombok:lombok:1.16.4")
 	compile("org.apache.commons:commons-math3:3.6.1")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile group: 'com.jayway.restassured', name: 'spring-mock-mvc', version: '2.2.0'
+	testCompile('com.jayway.jsonpath:json-path:0.9.1')
 }
