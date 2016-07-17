@@ -20,10 +20,13 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.UUID.fromString;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -78,5 +81,15 @@ public class UsuarioControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("[0].nome", is("Pedro1")))
                 .andExpect(jsonPath("[1].nome", is("Pedro2")));
+    }
+
+    @Test
+    public void deletaUsuarioPorId() throws Exception {
+        Usuario usuario = new Usuario(fromString("c2777f8d-0289-4024-9d4f-551ff441b1db"),"Pedro", 1000.00);
+        doReturn(usuario).when(usuarioRepository).findOne(fromString("c2777f8d-0289-4024-9d4f-551ff441b1db"));
+
+        mockMvc.perform(delete("/usuario/c2777f8d-0289-4024-9d4f-551ff441b1db"))
+                .andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.id", is("c2777f8d-0289-4024-9d4f-551ff441b1db")));
     }
 }
