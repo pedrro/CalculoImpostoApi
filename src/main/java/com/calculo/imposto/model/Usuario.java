@@ -2,18 +2,17 @@ package com.calculo.imposto.model;
 
 
 import org.apache.commons.math3.util.Precision;
-
-import java.util.UUID;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Document(collection = "usuario")
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Usuario {
-    private UUID id;
     public String nome;
     public double salario;
     private double inss, segVida, vr, vt, custoTotal;
@@ -21,7 +20,6 @@ public class Usuario {
     public Usuario(String nome, Double salario) {
         this.nome = nome;
         this.salario = salario;
-        this.id = UUID.randomUUID();
         setInss(salario);
         setSegVida(salario);
         setVr(salario);
@@ -29,9 +27,6 @@ public class Usuario {
         setCustoTotal();
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public void setNome(String nome) {
         this.nome = nome;
