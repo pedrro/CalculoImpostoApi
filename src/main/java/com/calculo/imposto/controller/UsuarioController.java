@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class UsuarioController {
     @Autowired UsuarioRepository usuarioRepository;
@@ -22,5 +24,10 @@ public class UsuarioController {
         Usuario novoUsuario = new Usuario(usuario.nome, usuario.salario);
         usuarioRepository.save(novoUsuario);
         return new ResponseEntity<Usuario>(novoUsuario, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/usuario", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Usuario>> retornaUsuarios() {
+        return new ResponseEntity<List<Usuario>>(usuarioRepository.findAll(), HttpStatus.OK);
     }
 }

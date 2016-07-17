@@ -17,10 +17,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -59,5 +63,20 @@ public class UsuarioControllerTest {
         .andExpect(jsonPath("$.inss", is(110.0)))
         .andExpect(jsonPath("$.segVida", is(200.0)))
         .andExpect(jsonPath("$.custoTotal", is(1500.00)));
+    }
+
+    @Test
+    public void retornaTodosOsUsuarios() throws Exception {
+        Usuario mock1 = new Usuario("Pedro1",1000.00);
+        Usuario mock2 = new Usuario("Pedro2",1000.00);
+        List<Usuario> usuariosMock = new ArrayList<Usuario>();
+        usuariosMock.add(mock1);
+        usuariosMock.add(mock2);
+        when(usuarioRepository.findAll()).thenReturn(usuariosMock);
+
+        mockMvc.perform(get("/usuario"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("[0].nome", is("Pedro1")))
+                .andExpect(jsonPath("[1].nome", is("Pedro2")));
     }
 }
