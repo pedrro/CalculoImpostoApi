@@ -20,13 +20,13 @@ import java.util.UUID;
 @RestController
 public class UsuarioController {
     @Autowired UsuarioRepository usuarioRepository;
-
+    Usuario usuario;
 
     @RequestMapping(value = "/usuario", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Usuario> criaUsuario(@RequestBody Usuario usuario) {
-        Usuario novoUsuario = new Usuario(usuario.nome, usuario.salario);
-        usuarioRepository.save(novoUsuario);
-        return new ResponseEntity<Usuario>(novoUsuario, HttpStatus.CREATED);
+    public ResponseEntity<Usuario> criaUsuario(@RequestBody Usuario novoUsuario) {
+         usuario = new Usuario(novoUsuario.nome, novoUsuario.salario);
+        usuarioRepository.save(usuario);
+        return new ResponseEntity<Usuario>(usuario, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/usuario", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -34,9 +34,13 @@ public class UsuarioController {
         return new ResponseEntity<List<Usuario>>(usuarioRepository.findAll(), HttpStatus.OK);
     }
 
+    @RequestMapping(value="/usuario/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Usuario> retornaUsuario(@PathVariable("id") UUID id) {
+        return new ResponseEntity<Usuario>(usuarioRepository.findOne(id), HttpStatus.FOUND);
+    }
+
     @RequestMapping(value= "/usuario/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Usuario> deletaUsuario(@PathVariable("id") UUID id) {
-        Usuario usuario;
         try {
             usuario = usuarioRepository.findOne(id);
             usuarioRepository.delete(id);

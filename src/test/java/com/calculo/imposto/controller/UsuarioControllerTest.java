@@ -92,4 +92,14 @@ public class UsuarioControllerTest {
                 .andExpect(status().isAccepted())
                 .andExpect(jsonPath("$.id", is("c2777f8d-0289-4024-9d4f-551ff441b1db")));
     }
+
+    @Test
+    public void retornaUmUsuario() throws Exception {
+        Usuario usuario = new Usuario(fromString("c2777f8d-0289-4024-9d4f-551ff441b1db"),"Pedro", 1000.00);
+        doReturn(usuario).when(usuarioRepository).findOne(fromString("c2777f8d-0289-4024-9d4f-551ff441b1db"));
+
+        mockMvc.perform(get("/usuario/c2777f8d-0289-4024-9d4f-551ff441b1db"))
+                .andExpect(status().isFound())
+                .andExpect(jsonPath("$.id", is("c2777f8d-0289-4024-9d4f-551ff441b1db")));
+    }
 }
