@@ -1,4 +1,4 @@
-package com.calculo.imposto;
+package com;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;

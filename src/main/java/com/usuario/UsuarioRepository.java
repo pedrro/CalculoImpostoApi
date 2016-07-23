@@ -1,6 +1,4 @@
-package com.calculo.imposto.repository;
-
-import com.calculo.imposto.model.Usuario;
+package com.usuario;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

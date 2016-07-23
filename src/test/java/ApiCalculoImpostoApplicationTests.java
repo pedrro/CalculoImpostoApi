@@ -1,4 +1,4 @@
-package com.calculo.imposto;
+import com.ApiCalculoImpostoApplication;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

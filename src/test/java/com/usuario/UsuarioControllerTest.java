@@ -1,8 +1,6 @@
-package com.calculo.imposto.controller;
+package com.usuario;
 
-import com.calculo.imposto.ApiCalculoImpostoApplication;
-import com.calculo.imposto.model.Usuario;
-import com.calculo.imposto.repository.UsuarioRepository;
+import com.ApiCalculoImpostoApplication;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -60,12 +58,7 @@ public class UsuarioControllerTest {
         .content(JSON)
         .contentType(APPLICATION_JSON_UTF8))
         .andExpect(status().isCreated())
-        .andExpect(jsonPath("$.nome", is("Pedro")))
-        .andExpect(jsonPath("$.vr", is(130.0)))
-        .andExpect(jsonPath("$.vt", is(60.0)))
-        .andExpect(jsonPath("$.inss", is(110.0)))
-        .andExpect(jsonPath("$.segVida", is(200.0)))
-        .andExpect(jsonPath("$.custoTotal", is(1500.00)));
+        .andExpect(jsonPath("$.nome", is("Pedro")));
     }
 
     @Test
@@ -75,7 +68,7 @@ public class UsuarioControllerTest {
         List<Usuario> usuariosMock = new ArrayList<Usuario>();
         usuariosMock.add(mock1);
         usuariosMock.add(mock2);
-        when(usuarioRepository.findAll()).thenReturn(usuariosMock);
+        doReturn(usuariosMock).when(usuarioRepository).findAll();
 
         mockMvc.perform(get("/usuario"))
                 .andExpect(status().isOk())

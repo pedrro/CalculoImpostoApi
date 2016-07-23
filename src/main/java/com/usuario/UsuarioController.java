@@ -1,7 +1,5 @@
-package com.calculo.imposto.controller;
+package com.usuario;
 
-import com.calculo.imposto.model.Usuario;
-import com.calculo.imposto.repository.UsuarioRepository;
 import com.mongodb.MongoException;
 
 import org.springframework.beans.factory.annotation.Autowired;
