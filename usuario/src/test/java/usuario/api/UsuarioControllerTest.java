@@ -6,13 +6,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.boot.test.WebIntegrationTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,32 +20,24 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = UsuarioApiApplication.class)
-@WebIntegrationTest(randomPort = true)
-@ContextConfiguration(classes = UsuarioApiApplication.class)
+@RunWith(MockitoJUnitRunner.class)
 public class UsuarioControllerTest {
 
     public static final String JSON = "{\"nome\":\"Pedro\",\"salario\":1000.00}";
     private MockMvc mockMvc;
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-    @Autowired
-    @Mock
-    private UsuarioRepository usuarioRepository;
-    @Autowired
-    @InjectMocks
-    private UsuarioController usuarioController;
+    @Autowired @Mock private UsuarioRepository usuarioRepository;
+    @InjectMocks private UsuarioController usuarioController;
 
     @Before
     public void setUp() throws Exception {
         initMocks(this);
-        this.mockMvc = webAppContextSetup(webApplicationContext).build();
+        this.mockMvc = MockMvcBuilders.standaloneSetup(usuarioController).build();
     }
 
     @Test
