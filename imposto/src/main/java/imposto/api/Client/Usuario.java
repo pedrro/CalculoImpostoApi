@@ -1,4 +1,4 @@
-package imposto.api;
+package imposto.api.Client;
 
 
 import org.springframework.data.annotation.Id;

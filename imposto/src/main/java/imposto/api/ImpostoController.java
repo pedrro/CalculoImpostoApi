@@ -9,17 +9,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
+import imposto.api.Client.Usuario;
+import imposto.api.Client.UsuarioClient;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 public class ImpostoController {
-    @Autowired UsuarioRepository usuarioRepository;
     @Autowired ImpostoRepository impostoRepository;
+    @Autowired UsuarioClient usuarioClient;
 
     @RequestMapping(value = "/calculaImposto/{id}", method = POST, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Imposto> calculaImposto(@PathVariable UUID id) {
-        Usuario usuario = usuarioRepository.findOne(id);
+        Usuario usuario = usuarioClient.pegaUsuarioPorId(id);
         Imposto impostoUsuario = new Imposto(usuario.getId(), usuario.getSalario());
         impostoRepository.save(impostoUsuario);
 

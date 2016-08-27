@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import imposto.api.Client.Usuario;
+import imposto.api.Client.UsuarioClient;
+
 import static java.util.UUID.fromString;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.doReturn;
@@ -22,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ImpostoControllerTest {
 
     private MockMvc mockMvc;
-    @Autowired @Mock private UsuarioRepository usuarioRepository;
+    @Autowired @Mock private UsuarioClient usuarioClient;
     @Autowired @Mock private ImpostoRepository impostoRepository;
     @InjectMocks private ImpostoController impostoController;
 
@@ -37,7 +40,7 @@ public class ImpostoControllerTest {
         Usuario usuarioMock = new Usuario(fromString("c2777f8d-0289-4024-9d4f-551ff441b1db"),"Pedro", 1000.0);
         Imposto impostoMock = new Imposto(usuarioMock.getId(),usuarioMock.getSalario());
 
-        doReturn(usuarioMock).when(usuarioRepository).findOne(fromString("c2777f8d-0289-4024-9d4f-551ff441b1db"));
+        doReturn(usuarioMock).when(usuarioClient).pegaUsuarioPorId(fromString("c2777f8d-0289-4024-9d4f-551ff441b1db"));
         doReturn(impostoMock).when(impostoRepository).save(impostoMock);
 
         mockMvc.perform(post("/calculaImposto/c2777f8d-0289-4024-9d4f-551ff441b1db"))
