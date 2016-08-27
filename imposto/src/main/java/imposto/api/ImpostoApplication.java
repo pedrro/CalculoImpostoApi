@@ -22,7 +22,7 @@ public class ImpostoApplication  extends AbstractMongoConfiguration{
 
     @Override
     protected String getDatabaseName() {
-        return "UsuarioDb";
+        return "ImpostoDb";
     }
 
     @Override
