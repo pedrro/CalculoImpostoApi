@@ -9,7 +9,7 @@ import static java.lang.String.valueOf;
 
 @Component
 public class UsuarioClient {
-    private static final String URL = "http://localhost:8081/usuario/" ;
+    private static final String URL = "http://localhost:8080/usuario/" ;
     private RestTemplate restTemplate;
 
     public UsuarioClient() {
