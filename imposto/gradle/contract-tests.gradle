@@ -1,0 +1,32 @@
+sourceSets {
+    contractTests {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/test/contract-tests/')
+        }
+        resources.srcDir file('src/test/resources')
+    }
+}
+
+task contractTests(type: Test) {
+    systemProperties['pact.rootDir'] = "$buildDir/pacts"
+    testClassesDir = sourceSets.contractTests.output.classesDir
+    classpath = sourceSets.contractTests.runtimeClasspath
+}
+
+configurations {
+    contractTestsCompile.extendsFrom testCompile
+    contractTestsRunTime.extendsFrom testRuntime
+}
+
+
+pact {
+    publish {
+        version =  '0.0.1'
+        pactDirectory = "$buildDir/pacts"
+        pactBrokerUrl = 'http://localhost:80/'
+    }
+}
+
+pactPublish.mustRunAfter contractTests
