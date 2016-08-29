@@ -25,7 +25,7 @@ pact {
     publish {
         version =  '0.0.1'
         pactDirectory = "$buildDir/pacts"
-        pactBrokerUrl = 'http://localhost:80/'
+        pactBrokerUrl = 'http://localhost:5000/'
     }
 }
 
