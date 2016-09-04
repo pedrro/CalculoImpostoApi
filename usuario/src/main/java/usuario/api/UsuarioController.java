@@ -42,7 +42,7 @@ public class UsuarioController {
 
     @RequestMapping(value = "{id}", method = GET, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Usuario> retornaUsuario(@PathVariable("id") UUID id) {
-        return new ResponseEntity<Usuario>(usuarioRepository.findOne(id), FOUND);
+        return new ResponseEntity<Usuario>(usuarioRepository.findOne(id), OK);
     }
 
     @RequestMapping(value = "{id}", method = DELETE, produces = APPLICATION_JSON_VALUE)

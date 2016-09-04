@@ -83,7 +83,7 @@ public class UsuarioControllerTest {
         doReturn(usuario).when(usuarioRepository).findOne(fromString("c2777f8d-0289-4024-9d4f-551ff441b1db"));
 
         mockMvc.perform(get("/usuario/c2777f8d-0289-4024-9d4f-551ff441b1db"))
-                .andExpect(status().isFound())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is("c2777f8d-0289-4024-9d4f-551ff441b1db")));
     }
 }

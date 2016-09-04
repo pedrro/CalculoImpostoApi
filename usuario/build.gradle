@@ -1,21 +1,26 @@
+
 buildscript {
     repositories {
         mavenCentral()
+        maven { url 'http://dl.bintray.com/vermeulen-mp/gradle-plugins' }
     }
     dependencies {
         classpath('org.springframework.boot:spring-boot-gradle-plugin:1.4.0.RELEASE')
         classpath 'au.com.dius:pact-jvm-provider-gradle_2.11:3.2.4'
-
+        classpath 'com.wiredforcode:gradle-spawn-plugin:0.8.1'
     }
 }
 
 plugins {
     id "au.com.dius.pact" version "2.2.11"
+    id "com.wiredforcode.spawn" version "0.8.1"
+
 }
 
 apply plugin: 'java'
 apply plugin: 'spring-boot'
 apply plugin: 'idea'
+apply plugin:'com.wiredforcode.spawn'
 
 
 jar {
@@ -28,6 +33,13 @@ targetCompatibility = 1.8
 repositories {
     mavenCentral()
 }
+
+task startServer(type: SpawnProcessTask, dependsOn: 'assemble') {
+    command "java -jar ${projectDir}/build/libs/usuarioapi-0.0.1-SNAPSHOT.jar"
+    ready 'Tomcat started'
+}
+
+task stopServer(type: KillProcessTask)
 
 
 dependencies {
@@ -44,6 +56,8 @@ dependencies {
 pact {
     serviceProviders {
         'usuario' {
+            startProviderTask = 'startServer'
+            terminateProviderTask = 'stopServer'
             hasPactsFromPactBroker('http://localhost:5000/') { consumer ->
                 stateChange = { providerState -> /* state change code here */ true }
             }
