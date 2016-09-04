@@ -23,7 +23,7 @@ public class UsuarioTests {
 
     @Pact(provider = "usuario", consumer = "imposto")
     public PactFragment pegaUsuario(PactDslWithProvider builder) throws Exception {
-        DslPart usuario = new PactDslJsonBody().uuid("id").stringType("nome").stringType("salario");
+        DslPart usuario = new PactDslJsonBody().uuid("id").stringType("nome").decimalType("salario");
 
         PactFragment fragment = builder.given("existe usuarios cadastrados no servico usuario")
                 .uponReceiving("quando eu busco por um usuario")
