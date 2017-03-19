@@ -1,4 +1,4 @@
-package usuario.api;
+package user.api;
 
 
 import org.junit.Before;
@@ -27,23 +27,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UsuarioControllerTest {
+public class UserControllerTest {
 
-    public static final String JSON = "{\"nome\":\"Pedro\",\"salario\":1000.00}";
+    public static final String JSON = "{\"name\":\"Pedro\",\"salary\":1000.00}";
     private MockMvc mockMvc;
-    @Autowired @Mock private UsuarioRepository usuarioRepository;
-    @InjectMocks private UsuarioController usuarioController;
+    @Autowired @Mock private UserRepository userRepository;
+    @InjectMocks private UserController userController;
 
     @Before
     public void setUp() throws Exception {
         initMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(usuarioController).build();
+        this.mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
     }
 
     @Test
-    public void criaUmNovoUsuario() throws Exception {
-        Usuario mock = new Usuario("Pedro", 1000.00);
-        when(usuarioRepository.save(mock)).thenReturn(mock);
+    public void shouldCreateNewUser() throws Exception {
+        User mock = new User("Pedro", 1000.00);
+        when(userRepository.save(mock)).thenReturn(mock);
 
         mockMvc.perform(post("/usuario")
                 .content(JSON)
@@ -53,24 +53,24 @@ public class UsuarioControllerTest {
     }
 
     @Test
-    public void retornaTodosOsUsuarios() throws Exception {
-        Usuario mock1 = new Usuario("Pedro1", 1000.00);
-        Usuario mock2 = new Usuario("Pedro2", 1000.00);
-        List<Usuario> usuariosMock = new ArrayList<Usuario>();
-        usuariosMock.add(mock1);
-        usuariosMock.add(mock2);
-        doReturn(usuariosMock).when(usuarioRepository).findAll();
+    public void shouldReturnAllUsers() throws Exception {
+        User mock1 = new User("Pedro1", 1000.00);
+        User mock2 = new User("Pedro2", 1000.00);
+        List<User> userMock = new ArrayList<User>();
+        userMock.add(mock1);
+        userMock.add(mock2);
+        doReturn(userMock).when(userRepository).findAll();
 
-        mockMvc.perform(get("/usuario"))
+        mockMvc.perform(get("/user"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("[0].nome", is("Pedro1")))
-                .andExpect(jsonPath("[1].nome", is("Pedro2")));
+                .andExpect(jsonPath("[0].name", is("Pedro1")))
+                .andExpect(jsonPath("[1].name", is("Pedro2")));
     }
 
     @Test
-    public void deletaUsuarioPorId() throws Exception {
-        Usuario usuario = new Usuario(fromString("c2777f8d-0289-4024-9d4f-551ff441b1db"), "Pedro", 1000.00);
-        doReturn(usuario).when(usuarioRepository).findOne(fromString("c2777f8d-0289-4024-9d4f-551ff441b1db"));
+    public void shouldDeleteUserById() throws Exception {
+        User user = new User(fromString("c2777f8d-0289-4024-9d4f-551ff441b1db"), "Pedro", 1000.00);
+        doReturn(user).when(userRepository).findOne(fromString("c2777f8d-0289-4024-9d4f-551ff441b1db"));
 
         mockMvc.perform(delete("/usuario/c2777f8d-0289-4024-9d4f-551ff441b1db"))
                 .andExpect(status().isNoContent())
@@ -78,9 +78,9 @@ public class UsuarioControllerTest {
     }
 
     @Test
-    public void retornaUmUsuario() throws Exception {
-        Usuario usuario = new Usuario(fromString("c2777f8d-0289-4024-9d4f-551ff441b1db"), "Pedro", 1000.00);
-        doReturn(usuario).when(usuarioRepository).findOne(fromString("c2777f8d-0289-4024-9d4f-551ff441b1db"));
+    public void shouldReturnAnUser() throws Exception {
+        User user = new User(fromString("c2777f8d-0289-4024-9d4f-551ff441b1db"), "Pedro", 1000.00);
+        doReturn(user).when(userRepository).findOne(fromString("c2777f8d-0289-4024-9d4f-551ff441b1db"));
 
         mockMvc.perform(get("/usuario/c2777f8d-0289-4024-9d4f-551ff441b1db"))
                 .andExpect(status().isOk())

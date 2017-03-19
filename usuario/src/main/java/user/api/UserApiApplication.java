@@ -1,4 +1,4 @@
-package usuario.api;
+package user.api;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
@@ -9,10 +9,10 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 
 @SpringBootApplication
 @EnableMongoRepositories
-public class UsuarioApiApplication extends AbstractMongoConfiguration {
+public class UserApiApplication extends AbstractMongoConfiguration {
 
     public static void main(String[] args) {
-        SpringApplication.run(UsuarioApiApplication.class, args);
+        SpringApplication.run(UserApiApplication.class, args);
     }
 
     @Override
@@ -22,6 +22,6 @@ public class UsuarioApiApplication extends AbstractMongoConfiguration {
 
     @Override
     protected String getDatabaseName() {
-        return "UsuarioDb";
+        return "UserDb";
     }
 }
